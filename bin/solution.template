@@ -1,0 +1,8 @@
+import os
+
+
+def main() -> None:
+    dirname = os.path.dirname(__file__)
+    input_filename = os.path.join(dirname, "input.txt")
+    with open(input_filename) as input:
+        pass

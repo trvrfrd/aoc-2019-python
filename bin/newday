@@ -1,39 +1,32 @@
 #!/usr/bin/env bash
 #
-# Create (very) rough template files for a new day's solution.
+# Create rough template files for a new day's solution.
 
 set -euo pipefail
 
 
-if [[ -z $1 ]]; then
+# fail if not provided an argument
+# or if argument is not between 1-25
+if [[ $# -lt 1 || ! $1 =~ ^([1-9]|1[0-9]|2[0-5])$ ]]; then
   echo "Please provide a day number between 1 and 25."
   exit 1
 fi
 
 daynum="$1"
+script_path="$(realpath "$0")" # how the hell does double-quoting work?
+bin_dir="$(dirname "$script_path")"
+base_dir="$bin_dir/.."
+new_dir="$base_dir/day$daynum"
 
-if [[ ! "$daynum" =~ ^([1-9]|1[0-9]|2[0-5])$ ]]; then
-  echo "Please provide a day number between 1 and 25."
-  exit 1
-fi
-
-dirname="day$daynum"
-
-if [[ -d "$dirname" ]]; then
-  echo "Directory for day $daynum already exists."
+if [[ -d "$new_dir" ]]; then
+  echo "Directory $new_dir already exists."
   exit 0
 fi
 
-mkdir "$dirname"
+mkdir "$new_dir"
 
-touch "$dirname/part1.py"
-grep "main" "day1/part1.py" >> "$dirname/part1.py"
-
-touch "$dirname/part2.py"
-grep "main" "day1/part1.py" >> "$dirname/part2.py"
-
-touch "$dirname/test.py"
-head -1 "day1/test.py" >> "$dirname/test.py"
-tail -2 "day1/test.py" >> "$dirname/test.py"
+cp "$bin_dir/solution.template" "$new_dir/part1.py"
+cp "$bin_dir/solution.template" "$new_dir/part2.py"
+cp "$bin_dir/test.template" "$new_dir/test.py"
 
 exit 0

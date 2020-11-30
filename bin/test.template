@@ -1,0 +1,12 @@
+import unittest
+
+from part1 import function
+
+
+class TestFunction(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(function(0), 0)
+
+
+if __name__ == "__main__":
+    unittest.main()
