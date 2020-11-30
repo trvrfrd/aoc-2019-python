@@ -15,7 +15,17 @@ What is the sum of the fuel requirements for all of the modules on your spacecra
 """
 
 
+import os
 from part1 import fuel_requirement
+
+
+def main() -> None:
+    dirname = os.path.dirname(__file__)
+    input_filename = os.path.join(dirname, "input.txt")
+    with open(input_filename) as input:
+        masses = map(int, input.readlines())
+        result = sum(map(total_fuel_requirement, masses))
+        print("Part 2 answer:", result)  # Your puzzle answer was 4994396.
 
 
 def total_fuel_requirement(mass: int) -> int:
@@ -27,13 +37,6 @@ def total_fuel_requirement(mass: int) -> int:
         added_fuel_mass = fuel_requirement(added_fuel_mass)
 
     return total_fuel_mass
-
-
-def main() -> None:
-    with open("./input.txt") as input:
-        masses = map(int, input.readlines())
-        result = sum(map(total_fuel_requirement, masses))
-        print("Part 2 answer:", result)  # Your puzzle answer was 4994396.
 
 
 if __name__ == "__main__":
